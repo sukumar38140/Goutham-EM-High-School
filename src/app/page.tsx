@@ -142,8 +142,8 @@ export default async function HomePage() {
             {/* Image / Card side */}
             <div className="relative h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-primary-cream">
               <Image
-                src="/images/building.jpg"
-                alt="Goutham School Building"
+                src="/images/prayer.avif"
+                alt="Goutham School Students Morning Prayer"
                 fill
                 className="object-cover"
               />

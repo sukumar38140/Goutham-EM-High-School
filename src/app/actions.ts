@@ -302,7 +302,7 @@ export async function addNewsAction(formData: FormData) {
     const isFeatured = formData.get("isFeatured") === "true";
     
     const imageFile = formData.get("image") as File;
-    let imageUrl = "/images/building.jpg"; // default
+    let imageUrl = "/images/building.png"; // default
 
     if (imageFile && imageFile.size > 0) {
       imageUrl = await saveUploadedFile(imageFile, "news");

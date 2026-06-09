@@ -47,7 +47,7 @@ export default function FacilitiesPage() {
       <section className="relative bg-dark-text text-white py-16 sm:py-24 overflow-hidden border-b-4 border-campus-green">
         <div className="absolute inset-0 opacity-20">
           <Image
-            src="/images/building.jpg"
+            src="/images/building.png"
             alt="Facilities Background"
             fill
             className="object-cover"

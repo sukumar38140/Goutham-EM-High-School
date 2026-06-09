@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: goutham_school_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ghs_admin
+      POSTGRES_PASSWORD: ghs_password_2026
+      POSTGRES_DB: goutham_school
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

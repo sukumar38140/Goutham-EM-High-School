@@ -1,0 +1,95 @@
+datasource db {
+  provider = "sqlite" // Change to "postgresql" for Vercel production deployment
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // Hashed password
+  name      String
+  role      String   @default("ADMIN") // SUPER_ADMIN, ADMIN
+  createdAt DateTime @default(now())
+}
+
+model Admission {
+  id                String   @id @default(uuid())
+  applicationNumber String   @unique
+  studentName       String
+  dateOfBirth       String
+  gender            String
+  gradeApplied      String
+  academicYear      String
+  parentName        String
+  parentEmail       String
+  parentPhone       String
+  address           String
+  documents         String   // JSON string storing filenames/urls
+  status            String   @default("PENDING") // PENDING, REVIEWING, APPROVED, REJECTED
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Faculty {
+  id            String   @id @default(uuid())
+  name          String
+  designation   String
+  qualification String
+  experience    String
+  department    String
+  imageUrl      String
+  displayOrder  Int      @default(0)
+}
+
+model GalleryItem {
+  id        String   @id @default(uuid())
+  title     String
+  category  String   // CAMPUS, SPORTS, EVENTS, LABS, CLASSROOMS
+  imageUrl  String
+  createdAt DateTime @default(now())
+}
+
+model News {
+  id          String   @id @default(uuid())
+  title       String
+  summary     String
+  content     String
+  imageUrl    String
+  isFeatured  Boolean  @default(false)
+  status      String   @default("PUBLISHED") // DRAFT, PUBLISHED
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+}
+
+model Event {
+  id                String   @id @default(uuid())
+  title             String
+  description       String
+  date              String   // formatted date string (e.g. YYYY-MM-DD)
+  location          String
+  registrationCount Int      @default(0)
+  status            String   @default("UPCOMING") // UPCOMING, PAST
+  createdAt         DateTime @default(now())
+}
+
+model Enquiry {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  phone     String
+  subject   String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model ContentSetting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String   // text or JSON string
+  description String
+}

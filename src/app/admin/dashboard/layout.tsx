@@ -30,6 +30,8 @@ const menuItems = [
   { name: "Content & SEO", href: "/admin/dashboard/content", icon: Settings },
 ];
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboardLayout({ children }: AdminLayoutProps) {
   // Server-side cryptographic token verification
   const session = await getAdminSession();

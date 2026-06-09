@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite" // Change to "postgresql" for Vercel production deployment
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

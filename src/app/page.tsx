@@ -23,6 +23,8 @@ import TestimonialCarousel from "@/components/TestimonialCarousel";
 import HomeGallery from "@/components/HomeGallery";
 import ContactForm from "@/components/ContactForm";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   // Fetch dynamic database content for the home page
   const newsItems = await prisma.news.findMany({

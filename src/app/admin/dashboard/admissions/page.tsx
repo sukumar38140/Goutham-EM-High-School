@@ -1,14 +1,20 @@
 import { prisma } from "@/lib/db";
 import AdmissionsManager from "./AdmissionsManager";
+import { Admission } from "@prisma/client";
 
 // Force dynamic fetch to avoid static page caching issues in dashboard
 export const dynamic = "force-dynamic";
 
 export default async function AdminAdmissionsPage() {
-  // Query all admissions applications
-  const applications = await prisma.admission.findMany({
-    orderBy: { createdAt: "desc" }
-  });
+  // Query all admissions applications safely
+  let applications: Admission[] = [];
+  try {
+    applications = await prisma.admission.findMany({
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (error) {
+    console.error("Admissions page fetch error:", error);
+  }
 
   return (
     <div className="space-y-8">

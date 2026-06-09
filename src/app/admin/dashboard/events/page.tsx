@@ -1,12 +1,18 @@
 import { prisma } from "@/lib/db";
 import EventsManager from "./EventsManager";
+import { Event as PrismaEvent } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminEventsPage() {
-  const events = await prisma.event.findMany({
-    orderBy: { date: "asc" }
-  });
+  let events: PrismaEvent[] = [];
+  try {
+    events = await prisma.event.findMany({
+      orderBy: { date: "asc" }
+    });
+  } catch (error) {
+    console.error("Events page fetch error:", error);
+  }
 
   return (
     <div className="space-y-8">

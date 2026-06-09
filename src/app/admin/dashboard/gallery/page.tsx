@@ -1,12 +1,18 @@
 import { prisma } from "@/lib/db";
 import GalleryManager from "./GalleryManager";
+import { GalleryItem } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminGalleryPage() {
-  const items = await prisma.galleryItem.findMany({
-    orderBy: { createdAt: "desc" }
-  });
+  let items: GalleryItem[] = [];
+  try {
+    items = await prisma.galleryItem.findMany({
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (error) {
+    console.error("Gallery page fetch error:", error);
+  }
 
   return (
     <div className="space-y-8">

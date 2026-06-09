@@ -1,12 +1,18 @@
 import { prisma } from "@/lib/db";
 import NewsManager from "./NewsManager";
+import { News } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminNewsPage() {
-  const news = await prisma.news.findMany({
-    orderBy: { publishedAt: "desc" }
-  });
+  let news: News[] = [];
+  try {
+    news = await prisma.news.findMany({
+      orderBy: { publishedAt: "desc" }
+    });
+  } catch (error) {
+    console.error("News page fetch error:", error);
+  }
 
   return (
     <div className="space-y-8">

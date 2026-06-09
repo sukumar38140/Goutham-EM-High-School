@@ -1,12 +1,18 @@
 import { prisma } from "@/lib/db";
 import FacultyManager from "./FacultyManager";
+import { Faculty } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminFacultyPage() {
-  const faculty = await prisma.faculty.findMany({
-    orderBy: { displayOrder: "asc" }
-  });
+  let faculty: Faculty[] = [];
+  try {
+    faculty = await prisma.faculty.findMany({
+      orderBy: { displayOrder: "asc" }
+    });
+  } catch (error) {
+    console.error("Faculty page fetch error:", error);
+  }
 
   return (
     <div className="space-y-8">

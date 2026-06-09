@@ -22,32 +22,42 @@ import CounterSection from "@/components/CounterSection";
 import TestimonialCarousel from "@/components/TestimonialCarousel";
 import HomeGallery from "@/components/HomeGallery";
 import ContactForm from "@/components/ContactForm";
+import { News, Event as PrismaEvent, GalleryItem, Faculty } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  // Fetch dynamic database content for the home page
-  const newsItems = await prisma.news.findMany({
-    where: { status: "PUBLISHED" },
-    orderBy: { createdAt: "desc" },
-    take: 3
-  });
+  // Fetch dynamic database content for the home page safely with graceful degradation
+  let newsItems: News[] = [];
+  let upcomingEvents: PrismaEvent[] = [];
+  let galleryItems: GalleryItem[] = [];
+  let facultyMembers: Faculty[] = [];
 
-  const upcomingEvents = await prisma.event.findMany({
-    where: { status: "UPCOMING" },
-    orderBy: { date: "asc" },
-    take: 3
-  });
+  try {
+    newsItems = await prisma.news.findMany({
+      where: { status: "PUBLISHED" },
+      orderBy: { createdAt: "desc" },
+      take: 3
+    });
 
-  const galleryItems = await prisma.galleryItem.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 6
-  });
+    upcomingEvents = await prisma.event.findMany({
+      where: { status: "UPCOMING" },
+      orderBy: { date: "asc" },
+      take: 3
+    });
 
-  const facultyMembers = await prisma.faculty.findMany({
-    orderBy: { displayOrder: "asc" },
-    take: 4
-  });
+    galleryItems = await prisma.galleryItem.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 6
+    });
+
+    facultyMembers = await prisma.faculty.findMany({
+      orderBy: { displayOrder: "asc" },
+      take: 4
+    });
+  } catch (error) {
+    console.error("Failed to fetch homepage database content:", error);
+  }
 
   return (
     <div className="relative w-full">

@@ -1,10 +1,16 @@
 import { prisma } from "@/lib/db";
 import ContentManager from "./ContentManager";
+import { ContentSetting } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminContentPage() {
-  const settings = await prisma.contentSetting.findMany();
+  let settings: ContentSetting[] = [];
+  try {
+    settings = await prisma.contentSetting.findMany();
+  } catch (error) {
+    console.error("Content page fetch error:", error);
+  }
 
   return (
     <div className="space-y-8">

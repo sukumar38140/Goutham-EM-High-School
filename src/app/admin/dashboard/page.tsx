@@ -7,28 +7,41 @@ import {
   CheckCircle2,
   ArrowRight
 } from "lucide-react";
+import { Admission, Enquiry } from "@prisma/client";
 
 export default async function AdminDashboardPage() {
   // Query operations statistics
-  const totalAdmissions = await prisma.admission.count();
-  const pendingAdmissions = await prisma.admission.count({ where: { status: "PENDING" } });
-  const approvedAdmissions = await prisma.admission.count({ where: { status: "APPROVED" } });
-  const totalEnquiries = await prisma.enquiry.count();
-  const unreadEnquiries = await prisma.enquiry.count({ where: { isRead: false } });
-  const facultyCount = await prisma.faculty.count();
-  const galleryCount = await prisma.galleryItem.count();
+  let totalAdmissions = 0;
+  let pendingAdmissions = 0;
+  let approvedAdmissions = 0;
+  let totalEnquiries = 0;
+  let unreadEnquiries = 0;
+  let facultyCount = 0;
+  let galleryCount = 0;
+  let recentAdmissions: Admission[] = [];
+  let recentEnquiries: Enquiry[] = [];
 
-  // Fetch recent applications
-  const recentAdmissions = await prisma.admission.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 5
-  });
+  try {
+    totalAdmissions = await prisma.admission.count();
+    pendingAdmissions = await prisma.admission.count({ where: { status: "PENDING" } });
+    approvedAdmissions = await prisma.admission.count({ where: { status: "APPROVED" } });
+    totalEnquiries = await prisma.enquiry.count();
+    unreadEnquiries = await prisma.enquiry.count({ where: { isRead: false } });
+    facultyCount = await prisma.faculty.count();
+    galleryCount = await prisma.galleryItem.count();
 
-  // Fetch recent enquiries
-  const recentEnquiries = await prisma.enquiry.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 5
-  });
+    recentAdmissions = await prisma.admission.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5
+    });
+
+    recentEnquiries = await prisma.enquiry.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 5
+    });
+  } catch (error) {
+    console.error("Dashboard page database fetch error:", error);
+  }
 
   const stats = [
     { name: "Total Applications", value: totalAdmissions, icon: GraduationCap, color: "text-blue-600 bg-blue-50" },

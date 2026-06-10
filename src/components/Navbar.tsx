@@ -45,8 +45,8 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "glass shadow-md py-2.5"
-          : "bg-transparent py-4"
+          ? "bg-white/95 backdrop-blur-md shadow-md py-2.5 border-b border-primary-cream/40"
+          : "bg-white py-4 border-b border-primary-cream/30"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,14 +73,14 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation links */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative font-semibold text-xs lg:text-sm tracking-wide transition-colors hover:text-deep-green py-2 ${
+                  className={`relative font-semibold text-xs xl:text-sm tracking-wide transition-colors hover:text-deep-green py-2 ${
                     isActive ? "text-deep-green font-bold" : "text-dark-text/80"
                   }`}
                 >
@@ -95,13 +95,13 @@ export default function Navbar() {
 
           {/* CTA, Language Switcher & Mobile Hamburger */}
           <div className="flex items-center gap-3 lg:gap-4">
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <LanguageSwitcher />
             </div>
 
             <Link
               href="/admissions"
-              className="hidden sm:flex items-center gap-1.5 bg-campus-green text-white hover:bg-deep-green font-bold text-xs lg:text-sm px-4 lg:px-5 py-2 lg:py-2.5 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+              className="hidden lg:flex items-center gap-1.5 bg-campus-green text-white hover:bg-deep-green font-bold text-xs xl:text-sm px-4 xl:px-5 py-2 xl:py-2.5 rounded-full shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
             >
               <GraduationCap size={16} />
               {t("nav.apply")}
@@ -110,7 +110,7 @@ export default function Navbar() {
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg md:hidden text-dark-text hover:bg-primary-cream/50 transition-colors focus:outline-none"
+              className="p-2 rounded-lg lg:hidden text-dark-text hover:bg-primary-cream/50 transition-colors focus:outline-none"
               aria-label="Toggle Menu"
             >
               {isOpen ? <X size={22} /> : <Menu size={22} />}
@@ -121,7 +121,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Navigation */}
       {isOpen && (
-        <div className="md:hidden glass border-t border-primary-cream animate-fadeIn">
+        <div className="lg:hidden bg-white border-t border-primary-cream shadow-lg animate-fadeIn">
           <div className="px-2 pt-2 pb-6 space-y-1 sm:px-3">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
@@ -146,7 +146,7 @@ export default function Navbar() {
               <LanguageSwitcher />
             </div>
 
-            <div className="pt-2 px-4 sm:hidden">
+            <div className="pt-2 px-4">
               <Link
                 href="/admissions"
                 className="flex items-center justify-center gap-2 w-full bg-campus-green text-white hover:bg-deep-green font-bold py-2.5 rounded-xl shadow-md"

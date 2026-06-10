@@ -25,7 +25,7 @@ import HomeGallery from "@/components/HomeGallery";
 import ContactForm from "@/components/ContactForm";
 import AnimatedSection from "@/components/AnimatedSection";
 import { translations, translateDbField } from "@/lib/translations";
-import { News, Event as PrismaEvent, GalleryItem, Faculty } from "@prisma/client";
+import { News, Event as PrismaEvent, GalleryItem } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +38,6 @@ export default async function HomePage() {
   let newsItems: News[] = [];
   let upcomingEvents: PrismaEvent[] = [];
   let galleryItems: GalleryItem[] = [];
-  let facultyMembers: Faculty[] = [];
 
   try {
     newsItems = await prisma.news.findMany({
@@ -57,59 +56,11 @@ export default async function HomePage() {
       orderBy: { createdAt: "desc" },
       take: 6
     });
-
-    facultyMembers = await prisma.faculty.findMany({
-      orderBy: { displayOrder: "asc" },
-      take: 4
-    });
   } catch (error) {
     console.error("Failed to fetch homepage database content:", error);
   }
 
   // --- RESILIENT FALLBACK CONTENT IN CASE DATABASE IS UNREACHABLE ---
-  const defaultFaculty: Faculty[] = [
-    {
-      id: "fallback-f1",
-      name: t("principal.name"),
-      designation: t("principal.title"),
-      qualification: "Ph.D in Education, M.Sc (Physics)",
-      experience: "22 Years",
-      department: "Administration",
-      imageUrl: "/images/logo.png",
-      displayOrder: 1
-    },
-    {
-      id: "fallback-f2",
-      name: "Mr. Rajesh Kumar",
-      designation: "Head of Science",
-      qualification: "M.Sc (Chemistry), B.Ed",
-      experience: "14 Years",
-      department: "Science",
-      imageUrl: "/images/building.png",
-      displayOrder: 2
-    },
-    {
-      id: "fallback-f3",
-      name: "Mrs. Anjali Sharma",
-      designation: "Senior Math Teacher",
-      qualification: "M.Sc (Mathematics), M.Ed",
-      experience: "10 Years",
-      department: "Mathematics",
-      imageUrl: "/images/logo.png",
-      displayOrder: 3
-    },
-    {
-      id: "fallback-f4",
-      name: "Mr. David Paul",
-      designation: "Physical Education Director",
-      qualification: "M.P.Ed",
-      experience: "8 Years",
-      department: "Sports",
-      imageUrl: "/images/building.png",
-      displayOrder: 4
-    }
-  ];
-
   const defaultNews: News[] = [
     {
       id: "fallback-n1",
@@ -164,7 +115,6 @@ export default async function HomePage() {
     { id: "fallback-g3", title: "Computer Classes Setup", category: "LABS", imageUrl: "/images/building.png", createdAt: new Date() }
   ];
 
-  const displayFaculty = facultyMembers.length > 0 ? facultyMembers : defaultFaculty;
   const displayNews = newsItems.length > 0 ? newsItems : defaultNews;
   const displayEvents = upcomingEvents.length > 0 ? upcomingEvents : defaultEvents;
   const displayGallery = galleryItems.length > 0 ? galleryItems : defaultGallery;
@@ -602,57 +552,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 9. FACULTY SECTION */}
-      <section className="py-20 bg-white overflow-hidden" id="faculty">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <AnimatedSection className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-deep-green bg-primary-cream px-4 py-1.5 rounded-full">
-              Faculty Members
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-dark-text tracking-tight">
-              Our Leadership & Academic Mentors
-            </h2>
-            <p className="text-dark-text/60 text-sm sm:text-base">
-              Dedicated educators focused on nurturing young minds and establishing foundation stones for future leadership.
-            </p>
-          </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {displayFaculty.map((member, idx) => {
-              // Localize faculty name and designation if database values have equivalents
-              const localizedName = translateDbField(member.name, lang);
-              const localizedDesignation = translateDbField(member.designation, lang);
-              const localizedDept = translateDbField(member.department, lang);
-              
-              return (
-                <AnimatedSection
-                  key={member.id}
-                  delay={idx * 0.08}
-                  className="bg-light-bg border border-primary-cream/80 rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between card-hover text-center p-6"
-                >
-                  <div>
-                    <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-white shadow-md mb-3 bg-white">
-                      <Image
-                        src={member.imageUrl}
-                        alt={localizedName}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                    <h3 className="font-extrabold text-base text-dark-text">{localizedName}</h3>
-                    <p className="text-xs text-deep-green font-bold uppercase tracking-wider mt-0.5">{localizedDesignation}</p>
-                    <p className="text-xs text-dark-text/50 mt-1 font-semibold">{localizedDept} Department</p>
-                    <div className="border-t border-primary-cream mt-4 pt-4 text-left space-y-1.5 text-xs text-dark-text/65">
-                      <p><strong>Qualification:</strong> {member.qualification}</p>
-                      <p><strong>Experience:</strong> {member.experience}</p>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* 10. GALLERY SECTION */}
       <section className="py-20 bg-light-bg overflow-hidden" id="gallery">

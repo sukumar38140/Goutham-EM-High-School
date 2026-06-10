@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
           <div className="relative w-16 h-16 bg-primary-cream text-deep-green rounded-full p-2 mx-auto shadow-inner flex items-center justify-center">
             <Image
               src="/images/logo.png"
-              alt="Goutham School Logo"
+              alt="Goutham E.M High School Logo"
               width={48}
               height={48}
               className="object-contain"

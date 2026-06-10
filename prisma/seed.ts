@@ -27,7 +27,7 @@ async function main() {
   await prisma.faculty.deleteMany();
   const facultyMembers = [
     {
-      name: 'Dr. Shanthi Priya',
+      name: 'N.Lakshmi Narayana',
       designation: 'Principal',
       qualification: 'Ph.D in Education, M.Sc (Physics)',
       experience: '22 Years',
@@ -41,7 +41,7 @@ async function main() {
       qualification: 'M.Sc (Chemistry), B.Ed',
       experience: '14 Years',
       department: 'Science',
-      imageUrl: '/images/building.jpg',
+      imageUrl: '/images/building.png',
       displayOrder: 2,
     },
     {
@@ -59,7 +59,7 @@ async function main() {
       qualification: 'M.P.Ed',
       experience: '8 Years',
       department: 'Sports',
-      imageUrl: '/images/independence-day.avif',
+      imageUrl: '/images/building.png',
       displayOrder: 4,
     },
   ];
@@ -74,22 +74,22 @@ async function main() {
     {
       title: 'Independence Day Celebrations',
       category: 'EVENTS',
-      imageUrl: '/images/independence-day.avif',
+      imageUrl: '/images/logo.png',
     },
     {
       title: 'Morning Prayer Session',
       category: 'CAMPUS',
-      imageUrl: '/images/prayer.avif',
+      imageUrl: '/images/logo.png',
     },
     {
       title: 'School Front Building',
       category: 'CAMPUS',
-      imageUrl: '/images/building.jpg',
+      imageUrl: '/images/building.png',
     },
     {
       title: 'Science Laboratory Experiment',
       category: 'LABS',
-      imageUrl: '/images/building.jpg',
+      imageUrl: '/images/building.png',
     },
   ];
   for (const g of galleryItems) {
@@ -102,17 +102,17 @@ async function main() {
   const newsItems = [
     {
       title: 'Admissions Open for Academic Year 2026-27',
-      summary: 'Applications are now open for Nursery to Class XI. Schedule a campus tour today.',
-      content: 'Goutham School is pleased to announce that registrations for the upcoming academic session 2026-27 have officially commenced. We invite parents seeking a holistic, excellence-driven education for their children to apply online or visit our school admissions desk. Scholarships are available for meritorious students and sports achievers.',
-      imageUrl: '/images/hero-desktop.png',
+      summary: 'Applications are now open for Nursery to Class X. Schedule a campus tour today.',
+      content: 'Goutham E.M High School is pleased to announce that registrations for the upcoming academic session 2026-27 have officially commenced. We invite parents seeking a holistic, technology-driven education for their children to apply online or visit our school admissions desk. Special focus on slow learners and AI tools.',
+      imageUrl: '/images/building.png',
       isFeatured: true,
       status: 'PUBLISHED',
     },
     {
       title: '100% Success in CBSE Board Examinations',
-      summary: 'Goutham School achieves stellar academic results with all students passing in high distinction.',
-      content: 'We are incredibly proud to share that our secondary and senior secondary students have once again achieved 100% pass results in the CBSE Board Examinations. Over 45% of our students scored above 90% aggregate marks, highlighting the dedication of our experienced faculty and the hard work of our learners.',
-      imageUrl: '/images/building.jpg',
+      summary: 'Goutham E.M High School achieves stellar academic results with all students passing in high distinction.',
+      content: 'We are incredibly proud to share that our secondary Class 10 students have once again achieved 100% pass results in the Board Examinations. Over 90% of our students scored top marks aggregate, highlighting the dedication of our experienced faculty and the hard work of our learners.',
+      imageUrl: '/images/building.png',
       isFeatured: false,
       status: 'PUBLISHED',
     },
@@ -127,15 +127,15 @@ async function main() {
   const events = [
     {
       title: 'Annual Science & Tech Fair',
-      description: 'Interact with student-designed drone prototypes, smart city models, and AI programming projects.',
+      description: 'Interact with student-designed smart city models and AI tools projects.',
       date: '2026-07-15',
-      location: 'Main School Auditorium',
+      location: 'Main School Assembly Hall',
       registrationCount: 154,
       status: 'UPCOMING',
     },
     {
       title: 'Parent-Teacher Consultations',
-      description: 'Discuss individual student progress, behavioral growth, and career guidance strategies with class mentors.',
+      description: 'Discuss individual student progress, behavioral growth, and special focus on slow learners.',
       date: '2026-06-28',
       location: 'Respective Classrooms',
       registrationCount: 320,
@@ -155,12 +155,12 @@ async function main() {
       studentName: 'Aarav Patil',
       dateOfBirth: '2015-08-14',
       gender: 'Male',
-      gradeApplied: 'Grade 5',
+      gradeApplied: 'Class V',
       academicYear: '2026-2027',
       parentName: 'Rajesh Patil',
       parentEmail: 'rajesh.patil@example.com',
-      parentPhone: '9876543210',
-      address: 'Flat 402, Green Meadows, Bengaluru, Karnataka',
+      parentPhone: '9490923166',
+      address: 'Neerugattuvari Palle, Madanapalle, Andhra Pradesh',
       documents: JSON.stringify([{ name: 'BirthCertificate.pdf', url: '#' }]),
       status: 'PENDING',
     },
@@ -169,12 +169,12 @@ async function main() {
       studentName: 'Meera Deshmukh',
       dateOfBirth: '2012-03-22',
       gender: 'Female',
-      gradeApplied: 'Grade 8',
+      gradeApplied: 'Class VIII',
       academicYear: '2026-2027',
       parentName: 'Sunita Deshmukh',
       parentEmail: 'sunita.d@example.com',
-      parentPhone: '9123456789',
-      address: 'House 14, Royal Enclave, Bengaluru, Karnataka',
+      parentPhone: '9490923166',
+      address: 'Near IIT Talent School, Madanapalle, Andhra Pradesh',
       documents: JSON.stringify([{ name: 'TransferCertificate.pdf', url: '#' }, { name: 'ReportCard.pdf', url: '#' }]),
       status: 'APPROVED',
     },
@@ -190,17 +190,17 @@ async function main() {
     {
       name: 'Karthik Rao',
       email: 'karthik.rao@example.com',
-      phone: '8765432109',
+      phone: '9490923166',
       subject: 'Inquiry regarding school bus routes',
-      message: 'Hello, we live in Whitefield and wanted to ask if school bus transportation is available for our area, and what the pickup times are. Thank you.',
+      message: 'Hello, we live in Madanapalle and wanted to ask if school bus transportation is available for our area, and what the pickup times are. Thank you.',
       isRead: false,
     },
     {
       name: 'Pooja Hegde',
       email: 'pooja.hegde@example.com',
-      phone: '7654321098',
+      phone: '9490923166',
       subject: 'Sports activities and training programs',
-      message: 'Hi, does the school offer professional coaching in tennis and swimming? Our son is a state-level junior player. Thanks.',
+      message: 'Hi, does the school offer professional coaching in Kabaddi and Kho-Kho? Thanks.',
       isRead: true,
     },
   ];
@@ -215,7 +215,7 @@ async function main() {
     {
       key: 'homepage.hero',
       value: JSON.stringify({
-        headline: 'Shaping Future Leaders Through Excellence in Education',
+        headline: 'Goutham E.M High School | IIT Talent School',
         subheadline: 'Admissions Open for Academic Year 2026–27',
       }),
       description: 'Homepage Hero section content settings.',
@@ -233,9 +233,9 @@ async function main() {
     {
       key: 'seo.globals',
       value: JSON.stringify({
-        title: 'Goutham School | Shaping Future Leaders',
-        description: 'Goutham School is a premier educational institution providing excellence in academics, sports, and holistic development for over 25 years.',
-        keywords: 'Goutham School, top school, CBSE school, admissions open 2026, best school, quality education',
+        title: 'Goutham E.M High School | IIT Talent School',
+        description: 'Goutham E.M High School is a premier educational institution in Madanapalle providing excellence in academics, sports, and holistic development.',
+        keywords: 'Goutham E.M High School, IIT Talent School, Madanapalle, admissions open 2026, quality education',
       }),
       description: 'Global search engine optimization settings.',
     },

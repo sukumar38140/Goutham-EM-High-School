@@ -1,7 +1,32 @@
 import Image from "next/image";
+import { cookies } from "next/headers";
 import { BookOpen, Compass, Award, CheckCircle2, ChevronRight } from "lucide-react";
+import AnimatedSection from "@/components/AnimatedSection";
+import { translations } from "@/lib/translations";
 
-export default function AcademicsPage() {
+export default async function AcademicsPage() {
+  const cookieStore = await cookies();
+  const lang = cookieStore.get("lang")?.value || "en";
+  const t = (key: string) => translations[lang]?.[key] || translations["en"]?.[key] || key;
+
+  const academicStages = [
+    {
+      phase: `${t("acad.pre.title")} (${t("acad.pre.grades")})`,
+      description: t("acad.pre.desc"),
+      subjects: "Rhymes, Basic Alphabet, Numerical Skills, Drawing & Craft, Interactive Fun Activities"
+    },
+    {
+      phase: `${t("acad.pri.title")} (${t("acad.pri.grades")})`,
+      description: t("acad.pri.desc"),
+      subjects: "English, Mathematics, Science, Social Sciences, Computer Classes (Coding & AI tools intro), Local Language"
+    },
+    {
+      phase: `${t("acad.sec.title")} (${t("acad.sec.grades")})`,
+      description: `${t("acad.sec.desc")} Class mentors conduct special revision camps, Mock board exam test series, and hands-on laboratory experiments. AI awareness programs are conducted regularly.`,
+      subjects: "English Literature, Mathematics, Physics, Chemistry, Biology, History, Geography, Civics, Computer Applications & Coding (Python, AI Tools)"
+    }
+  ];
+
   return (
     <div className="relative w-full bg-light-bg pb-20">
       {/* Header Banner */}
@@ -16,23 +41,23 @@ export default function AcademicsPage() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <span className="text-xs font-bold uppercase tracking-widest text-campus-green bg-white/10 px-4 py-1 rounded-full border border-white/10">
-            Academics
+            {t("nav.academics")}
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">Academic Curriculum</h1>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">{t("acad.title")}</h1>
           <p className="text-sm sm:text-base text-white/75 max-w-2xl mx-auto">
-            Nurturing analytical skills, physical stamina, and scientific reasoning through our structured CBSE coursework.
+            {t("acad.desc")}
           </p>
         </div>
       </section>
 
       {/* Curriculum Overview */}
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white border border-primary-cream/80 p-8 sm:p-12 rounded-3xl shadow-lg space-y-6">
+        <AnimatedSection className="bg-white border border-primary-cream/80 p-8 sm:p-12 rounded-3xl shadow-lg space-y-6">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-dark-text tracking-tight">
             Affiliated to Central Board of Secondary Education (CBSE)
           </h2>
           <p className="text-sm sm:text-base text-dark-text/70 leading-relaxed">
-            Our curriculum conforms to the standards laid down by the CBSE, New Delhi. We utilize research-driven pedagogical methods that prioritize conceptual understanding over rote memorization. Continuous and Comprehensive Evaluation (CCE) systems are integrated into class assignments, ensuring that student development is tracked consistently across multiple criteria.
+            Our curriculum conforms to the standards laid down by the CBSE, New Delhi, spanning Nursery to Class X. We utilize research-driven pedagogical methods that prioritize conceptual understanding over rote memorization. Our students travel with the latest technologies, featuring special focus on slow learners and hands-on experience with AI tools.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
             <div className="flex gap-4">
@@ -41,7 +66,7 @@ export default function AcademicsPage() {
               </div>
               <div>
                 <h4 className="font-extrabold text-dark-text text-sm mb-1">Experiential Pedagogy</h4>
-                <p className="text-xs text-dark-text/60">Integrating lab experiments and smart board projects directly into lesson plans.</p>
+                <p className="text-xs text-dark-text/60">Integrating computer classes, science labs, and interactive smart boards in lessons.</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -49,8 +74,8 @@ export default function AcademicsPage() {
                 <Compass size={18} />
               </div>
               <div>
-                <h4 className="font-extrabold text-dark-text text-sm mb-1">Co-Curricular Grooming</h4>
-                <p className="text-xs text-dark-text/60">Creative arts, coding, and physical coaching classes are scheduled during weekly hours.</p>
+                <h4 className="font-extrabold text-dark-text text-sm mb-1">Co-Curricular & AI Awareness</h4>
+                <p className="text-xs text-dark-text/60">Hands-on experience with AI tools, self-defense classes for girls, and fun activities.</p>
               </div>
             </div>
             <div className="flex gap-4">
@@ -58,46 +83,26 @@ export default function AcademicsPage() {
                 <Award size={18} />
               </div>
               <div>
-                <h4 className="font-extrabold text-dark-text text-sm mb-1">Continuous Mentorship</h4>
-                <p className="text-xs text-dark-text/60">Class teacher advisory circles meet bi-weekly to discuss individual student concerns.</p>
+                <h4 className="font-extrabold text-dark-text text-sm mb-1">Special Focus on Slow Learners</h4>
+                <p className="text-xs text-dark-text/60">Continuous academic advisory circles meet weekly to help students catch up effectively.</p>
               </div>
             </div>
           </div>
-        </div>
+        </AnimatedSection>
       </section>
 
       {/* Learning Phases Detail */}
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
+        <AnimatedSection className="text-center max-w-2xl mx-auto space-y-2">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-dark-text">Academic Stages</h2>
-          <p className="text-xs sm:text-sm text-dark-text/60">Providing age-appropriate learning frameworks from Nursery to Class XII.</p>
-        </div>
+          <p className="text-xs sm:text-sm text-dark-text/60">Providing age-appropriate learning frameworks from Nursery to Class X.</p>
+        </AnimatedSection>
 
         <div className="space-y-8">
-          {[
-            {
-              phase: "Early Years Foundation (Nursery to UKG)",
-              description: "Focused on socialization, basic language habits, number identification, fine motor controls, and vocabulary building. We avoid heavy textbooks, utilizing play materials, drawing books, and interactive singing circles to make first learning experiences enjoyable.",
-              subjects: "Rhymes, Basic Alphabet, Numerical Skills, Drawing & Craft, Interactive Games"
-            },
-            {
-              phase: "Primary School (Class I to Class V)",
-              description: "Focus shifts to structural language grammar, writing skills, mathematical calculations, and environmental sciences. Students are introduced to computer labs to develop basic keyboarding and painting software skills.",
-              subjects: "English, Mathematics, Environmental Science (EVS), Regional Language, Computer Studies, Moral Science"
-            },
-            {
-              phase: "Middle School (Class VI to Class VIII)",
-              description: "Introducing specific divisions of science (Physics, Chemistry, Biology) and social sciences (History, Geography, Civics). Coding basics, structured laboratories, and creative writing programs are added to prepare students for secondary schooling.",
-              subjects: "English Lit, Hindi/Sanskrit, Mathematics, Physics, Chemistry, Biology, Social Sciences, Computer Coding (Python)"
-            },
-            {
-              phase: "Secondary & Senior Secondary (Class IX to Class XII)",
-              description: "Rigorous CBSE board syllabus preparation. Class mentors conduct special revision camps, Mock test series, and past-paper reviews. In Senior Secondary (Class XI & XII), students choose specific professional pathways:",
-              subjects: "Science Stream (Physics, Chemistry, Math/Bio, CS), Commerce Stream (Accountancy, Business Studies, Economics, Math), Humanities Stream (Pol Science, History, Economics)"
-            }
-          ].map((stage, idx) => (
-            <div
+          {academicStages.map((stage, idx) => (
+            <AnimatedSection
               key={idx}
+              delay={idx * 0.1}
               className="bg-white border border-primary-cream/80 p-8 rounded-3xl shadow-sm space-y-4 hover:shadow-md transition-shadow"
             >
               <h3 className="font-extrabold text-lg sm:text-xl text-dark-text flex items-center gap-2">
@@ -110,7 +115,7 @@ export default function AcademicsPage() {
               <div className="bg-primary-cream/30 border border-primary-cream rounded-xl p-4 ml-7 text-xs text-dark-text/75">
                 <strong>Key Focus Areas / Subjects:</strong> {stage.subjects}
               </div>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </section>
@@ -118,12 +123,12 @@ export default function AcademicsPage() {
       {/* Evaluation & Grading */}
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+          <AnimatedSection direction="right" className="space-y-6">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-dark-text tracking-tight">
               Evaluation & Assessment
             </h2>
             <p className="text-sm text-dark-text/70 leading-relaxed">
-              We conduct academic evaluations across the year divided into two semesters. For Primary and Middle school levels, assessment metrics combine written term examinations, practical lab reports, subject portfolio submissions, and classroom participation behavior.
+              We conduct academic evaluations across the year divided into two semesters. For Primary and Middle school levels, assessment metrics combine written term examinations, practical lab reports, computer classes portfolio submissions, and classroom participation.
             </p>
             <ul className="space-y-3 text-xs sm:text-sm text-dark-text/75 font-semibold">
               <li className="flex gap-2 items-center">
@@ -136,16 +141,16 @@ export default function AcademicsPage() {
               </li>
               <li className="flex gap-2 items-center">
                 <CheckCircle2 size={16} className="text-campus-green" />
-                <span>Annual Written Board Exams - conducted in March</span>
+                <span>Annual Board Exams (Class X) - conducted in March</span>
               </li>
               <li className="flex gap-2 items-center">
                 <CheckCircle2 size={16} className="text-campus-green" />
-                <span>Internal Lab Assessments & Viva Voce</span>
+                <span>Internal Computer & Science Lab Assessments</span>
               </li>
             </ul>
-          </div>
+          </AnimatedSection>
 
-          <div className="bg-white border border-primary-cream/80 rounded-3xl p-6 sm:p-8 shadow-md">
+          <AnimatedSection direction="left" className="bg-white border border-primary-cream/80 rounded-3xl p-6 sm:p-8 shadow-md">
             <h3 className="font-extrabold text-lg text-dark-text mb-4">Grading System Outline</h3>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs sm:text-sm">
@@ -165,7 +170,7 @@ export default function AcademicsPage() {
                   <tr>
                     <td className="py-2.5 font-semibold">81% – 90%</td>
                     <td className="py-2.5 font-bold text-deep-green">A2</td>
-                    <td className="py-2.5">Excellent</td>
+                    <td className="py-2.5">Excellent (90% score top marks)</td>
                   </tr>
                   <tr>
                     <td className="py-2.5 font-semibold">71% – 80%</td>
@@ -185,12 +190,12 @@ export default function AcademicsPage() {
                   <tr>
                     <td className="py-2.5 font-semibold">Below 33%</td>
                     <td className="py-2.5 font-bold text-red-500">D/E</td>
-                    <td className="py-2.5">Needs Improvement</td>
+                    <td className="py-2.5">Needs Improvement (Special Focus on Slow Learners)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
     </div>

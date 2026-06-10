@@ -1,8 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { GraduationCap, ArrowRight, ClipboardList, CheckSquare, FileText, Search } from "lucide-react";
+import AnimatedSection from "@/components/AnimatedSection";
+import { translations } from "@/lib/translations";
 
-export default function AdmissionsPage() {
+export default async function AdmissionsPage() {
+  const cookieStore = await cookies();
+  const lang = cookieStore.get("lang")?.value || "en";
+  const t = (key: string) => translations[lang]?.[key] || translations["en"]?.[key] || key;
+
   return (
     <div className="relative w-full bg-light-bg pb-20">
       {/* Header Banner */}
@@ -17,11 +24,11 @@ export default function AdmissionsPage() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <span className="text-xs font-bold uppercase tracking-widest text-campus-green bg-white/10 px-4 py-1 rounded-full border border-white/10">
-            Admissions
+            {t("nav.admissions")}
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">Admissions Portal</h1>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">{t("adm.badge")}</h1>
           <p className="text-sm sm:text-base text-white/75 max-w-2xl mx-auto">
-            Admissions open for Academic Year 2026–27. Join an institution dedicated to shaping leaders.
+            {t("adm.title")}
           </p>
         </div>
       </section>
@@ -30,12 +37,12 @@ export default function AdmissionsPage() {
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Card 1: Apply Now */}
-          <div className="bg-white border border-primary-cream p-8 sm:p-10 rounded-3xl shadow-lg flex flex-col justify-between hover:shadow-xl transition-all">
+          <AnimatedSection direction="right" className="bg-white border border-primary-cream p-8 sm:p-10 rounded-3xl shadow-lg flex flex-col justify-between hover:shadow-xl transition-all">
             <div className="space-y-4">
               <div className="w-12 h-12 bg-primary-cream text-deep-green rounded-2xl flex items-center justify-center">
                 <GraduationCap size={24} />
               </div>
-              <h3 className="font-extrabold text-2xl text-dark-text">Online Application Form</h3>
+              <h3 className="font-extrabold text-2xl text-dark-text">{t("adm.btn.apply")}</h3>
               <p className="text-sm text-dark-text/60 leading-relaxed">
                 Submit a new student registration form directly using our secure portal. You will need to upload digital copies of the student&apos;s Birth Certificate and previous report cards.
               </p>
@@ -44,18 +51,18 @@ export default function AdmissionsPage() {
               href="/admissions/apply"
               className="mt-8 w-full flex items-center justify-center gap-2 bg-campus-green hover:bg-deep-green text-white font-extrabold py-4 rounded-2xl shadow-md transition-colors"
             >
-              Apply Online
+              {t("btn.applynow")}
               <ArrowRight size={18} />
             </Link>
-          </div>
+          </AnimatedSection>
 
           {/* Card 2: Track Status */}
-          <div className="bg-white border border-primary-cream p-8 sm:p-10 rounded-3xl shadow-lg flex flex-col justify-between hover:shadow-xl transition-all">
+          <AnimatedSection direction="left" className="bg-white border border-primary-cream p-8 sm:p-10 rounded-3xl shadow-lg flex flex-col justify-between hover:shadow-xl transition-all">
             <div className="space-y-4">
               <div className="w-12 h-12 bg-primary-cream text-deep-green rounded-2xl flex items-center justify-center">
                 <Search size={24} />
               </div>
-              <h3 className="font-extrabold text-2xl text-dark-text">Track Application Status</h3>
+              <h3 className="font-extrabold text-2xl text-dark-text">{t("btn.track")}</h3>
               <p className="text-sm text-dark-text/60 leading-relaxed">
                 If you have already submitted an admission registration, check its progress. Enter your system-generated application number (e.g. GHS-2026-XXXX) to view status updates.
               </p>
@@ -64,35 +71,36 @@ export default function AdmissionsPage() {
               href="/admissions/track"
               className="mt-8 w-full flex items-center justify-center gap-2 bg-light-bg border border-primary-cream hover:bg-primary-cream/50 text-dark-text font-extrabold py-4 rounded-2xl transition-colors"
             >
-              Track Application
+              {t("btn.track")}
               <ArrowRight size={18} className="text-deep-green" />
             </Link>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* 4-Step Process Section */}
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="text-center max-w-2xl mx-auto space-y-2">
+        <AnimatedSection className="text-center max-w-2xl mx-auto space-y-2">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-dark-text">The Admission Journey</h2>
-          <p className="text-xs sm:text-sm text-dark-text/60">Four simple steps to register and enroll your child at Goutham School.</p>
-        </div>
+          <p className="text-xs sm:text-sm text-dark-text/60">Four simple steps to register and enroll your child at {t("school.name")}.</p>
+        </AnimatedSection>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { step: "01", title: "Online Registration", desc: "Fill out the registration details on our application portal and upload required documents." },
             { step: "02", title: "Document Review", desc: "Our admissions department reviews the forms. Successful files are invited for campus interactions." },
-            { step: "03", title: "Student Interaction", desc: "A friendly, informal chat with the student and parents. Basic readiness tests for senior grades." },
+            { step: "03", title: "Student Interaction", desc: "A friendly, informal chat with the student and parents. Basic readiness checks for class alignments." },
             { step: "04", title: "Enrollment & Fees", desc: "Submit school fee records to confirm the seat, and pick up the student uniform/syllabus brochures." }
           ].map((item, idx) => (
-            <div
+            <AnimatedSection
               key={idx}
+              delay={idx * 0.08}
               className="bg-white border border-primary-cream/70 p-6 rounded-2xl relative shadow-sm"
             >
               <span className="absolute top-4 right-6 text-3xl font-black text-campus-green/20">{item.step}</span>
               <h3 className="font-extrabold text-base text-dark-text mb-2 pr-8">{item.title}</h3>
               <p className="text-xs sm:text-sm text-dark-text/60 leading-relaxed">{item.desc}</p>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </section>
@@ -101,10 +109,10 @@ export default function AdmissionsPage() {
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Eligibility */}
-          <div className="bg-white border border-primary-cream/80 rounded-3xl p-6 sm:p-8 shadow-md">
+          <AnimatedSection direction="right" className="bg-white border border-primary-cream/80 rounded-3xl p-6 sm:p-8 shadow-md">
             <h3 className="font-extrabold text-lg sm:text-xl text-dark-text mb-6 flex items-center gap-2">
               <ClipboardList className="text-campus-green" />
-              Age Eligibility Guidelines
+              {t("adm.eligibility.title")}
             </h3>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs sm:text-sm">
@@ -132,20 +140,20 @@ export default function AdmissionsPage() {
                     <td className="py-3 font-medium">June 1st, 2026</td>
                   </tr>
                   <tr>
-                    <td className="py-3 font-semibold">Class I</td>
+                    <td className="py-3 font-semibold">Class I (1st Grade)</td>
                     <td className="py-3">6 Years</td>
                     <td className="py-3 font-medium">June 1st, 2026</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
+          </AnimatedSection>
 
           {/* Required Documents */}
-          <div className="bg-white border border-primary-cream/80 rounded-3xl p-6 sm:p-8 shadow-md">
+          <AnimatedSection direction="left" className="bg-white border border-primary-cream/80 rounded-3xl p-6 sm:p-8 shadow-md">
             <h3 className="font-extrabold text-lg sm:text-xl text-dark-text mb-6 flex items-center gap-2">
               <CheckSquare className="text-campus-green" />
-              Document Preparation Checklist
+              {t("adm.docs.title")}
             </h3>
             <ul className="space-y-4 text-xs sm:text-sm text-dark-text/75 leading-relaxed">
               <li className="flex gap-3 items-start">
@@ -166,24 +174,24 @@ export default function AdmissionsPage() {
               </li>
               <li className="flex gap-3 items-start">
                 <CheckSquare size={18} className="text-campus-green shrink-0 mt-0.5" />
-                <span><strong>Address Proof:</strong> Passport, Aadhaar, Electricity Bill, or Rental Deed.</span>
+                <span><strong>Address Proof:</strong> Aadhaar Card, Electricity Bill, or Rental Deed.</span>
               </li>
             </ul>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Fee Reference Info */}
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="fees">
-        <div className="bg-primary-cream/45 border-2 border-primary-cream rounded-3xl p-6 sm:p-10 space-y-4">
+        <AnimatedSection className="bg-primary-cream/45 border-2 border-primary-cream rounded-3xl p-6 sm:p-10 space-y-4">
           <h3 className="font-extrabold text-lg sm:text-xl text-dark-text flex items-center gap-2">
             <FileText className="text-campus-green" />
-            School Fee & Prospectus Details
+            {t("adm.fee.title")}
           </h3>
           <p className="text-xs sm:text-sm text-dark-text/70 leading-relaxed">
-            The school fee structures vary depending on the grade and co-curricular programs. We support quarterly fee payments through online banking links, demand drafts, or physical school office counters. To check detailed fee charts, schedule physical interactions, or download prospectus brochures, please contact our administrative desk at <a href="mailto:info@gouthamschool.com" className="text-deep-green font-bold underline">info@gouthamschool.com</a>.
+            {t("adm.fee.desc")}
           </p>
-        </div>
+        </AnimatedSection>
       </section>
     </div>
   );

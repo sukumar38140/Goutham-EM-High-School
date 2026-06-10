@@ -55,13 +55,13 @@ export default async function AdminDashboardLayout({ children }: AdminLayoutProp
           <div className="relative w-8 h-8 bg-white rounded-full p-1 overflow-hidden shrink-0">
             <Image
               src="/images/logo.png"
-              alt="Goutham School Logo"
+              alt="Goutham E.M High School Logo"
               fill
               className="object-contain"
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-extrabold text-sm tracking-wide text-white">Goutham School</span>
+            <span className="font-extrabold text-sm tracking-wide text-white font-sans">Goutham E.M High School</span>
             <span className="text-[10px] text-campus-green font-bold uppercase tracking-wider -mt-0.5">Admin Workspace</span>
           </div>
         </div>

@@ -1,41 +1,48 @@
 import Image from "next/image";
+import { cookies } from "next/headers";
 import { BookOpen, Compass, Trophy, Bus, Monitor, Volume2, ShieldCheck, CheckCircle2 } from "lucide-react";
+import AnimatedSection from "@/components/AnimatedSection";
+import { translations } from "@/lib/translations";
 
-export default function FacilitiesPage() {
+export default async function FacilitiesPage() {
+  const cookieStore = await cookies();
+  const lang = cookieStore.get("lang")?.value || "en";
+  const t = (key: string) => translations[lang]?.[key] || translations["en"]?.[key] || key;
+
   const facilityItems = [
     {
-      title: "Campus Library & Media Center",
-      description: "Our library is a resource center housing over 10,000 reference volumes, subscription encyclopedias, children's literature, and science journals. It features dedicated reading booths and computer units for digital archives.",
+      title: t("fac.lib.title"),
+      description: t("fac.lib.desc"),
       icon: BookOpen,
       details: ["10,000+ Book volumes", "Weekly library reading hours", "Subscription digital reference tools"]
     },
     {
-      title: "Science Laboratories",
-      description: "Separate, fully equipped laboratory spaces for Physics, Chemistry, and Biology. Designed in compliance with CBSE safety directives, they feature modern apparatus, microscopes, and chemical safety hoods to facilitate hands-on learning.",
+      title: t("fac.science.title"),
+      description: t("fac.science.desc") + " Featuring modern apparatus to facilitate hand-on experimentations.",
       icon: Compass,
       details: ["Dedicated experiment tables", "CBSE compliant safety setups", "Physics, Chemistry & Biology apparatus"]
     },
     {
-      title: "Computer Laboratory",
-      description: "Equipped with state-of-the-art computing terminals, high-speed local networks, and programming software. Students learn basic office applications, digital painting, HTML coding, and Python programming structures.",
+      title: t("fac.comp.title"),
+      description: t("fac.comp.desc") + " Students learn basic computer applications, digital painting, HTML coding, and Python programming structures.",
       icon: Monitor,
-      details: ["Individual workstation configs", "Scratch & Python coding setups", "Projector-led instruction screens"]
+      details: ["Individual workstation configs", "Scratch & Python coding setups", "Hands-on experience with AI tools"]
     },
     {
-      title: "Playground & Sports Infrastructure",
-      description: "Features basketball courts, soccer drill zones, and tracks for athletics. We hold annual school sports festivals, inter-school tournaments, and offer specialized coaches for football, cricket, and running.",
+      title: t("fac.sports.title"),
+      description: t("fac.sports.desc") + " We train students to excel in state-level zonal tournaments for sports like Kabaddi and Kho-Kho.",
       icon: Trophy,
-      details: ["Basketball court setup", "Football training gear", "State-level tournament coaching"]
+      details: ["Basketball court setup", "Kabaddi & Kho-Kho training zones", "Zonal championship coaching setups"]
     },
     {
-      title: "Smart Classrooms",
-      description: "Every classroom features digital projectors, high-definition smart display boards, and local internet access. Teachers utilize audio-visual clips, diagrams, and educational videos to explain complex concepts.",
+      title: t("fac.smart.title"),
+      description: t("fac.smart.desc"),
       icon: Volume2,
       details: ["HD Interactive Smart Boards", "Audio-visual learning libraries", "Ergonomically designed desks"]
     },
     {
-      title: "GPS-Enabled Transport Fleet",
-      description: "We operate a fleet of modern, GPS-tracked school buses covering key residential hubs in Bangalore. Each bus is staffed with a professional driver, a conductor, and female helpers to coordinate student safety.",
+      title: t("fac.trans.title"),
+      description: t("fac.trans.desc") + " We operate a fleet of modern, GPS-tracked school buses covering key residential hubs in Madanapalle.",
       icon: Bus,
       details: ["Real-time GPS tracking status", "First-aid & speed limiter checks", "Trained helpers and supervisors"]
     }
@@ -55,11 +62,11 @@ export default function FacilitiesPage() {
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <span className="text-xs font-bold uppercase tracking-widest text-campus-green bg-white/10 px-4 py-1 rounded-full border border-white/10">
-            Facilities
+            {t("nav.facilities")}
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">Campus Infrastructure</h1>
+          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">{t("fac.badge")}</h1>
           <p className="text-sm sm:text-base text-white/75 max-w-2xl mx-auto">
-            Discover the labs, libraries, playgrounds, and security systems that define Goutham School&apos;s premium environment.
+            {t("fac.title")}
           </p>
         </div>
       </section>
@@ -70,8 +77,9 @@ export default function FacilitiesPage() {
           {facilityItems.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div
+              <AnimatedSection
                 key={idx}
+                delay={idx * 0.08}
                 className="bg-white border border-primary-cream p-8 rounded-3xl shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
               >
                 <div className="space-y-4">
@@ -91,7 +99,7 @@ export default function FacilitiesPage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </AnimatedSection>
             );
           })}
         </div>
@@ -99,14 +107,14 @@ export default function FacilitiesPage() {
 
       {/* Safety & security detail */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white border border-primary-cream rounded-3xl p-8 sm:p-12 shadow-sm grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <AnimatedSection className="bg-white border border-primary-cream rounded-3xl p-8 sm:p-12 shadow-sm grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
           <div className="lg:col-span-2 space-y-4">
             <h3 className="font-extrabold text-xl sm:text-2xl text-dark-text flex items-center gap-2">
               <ShieldCheck className="text-campus-green" />
               Comprehensive Campus Safety & Security
             </h3>
             <p className="text-xs sm:text-sm text-dark-text/65 leading-relaxed">
-              Student safety is our highest operational priority. The entire campus is monitored by high-definition CCTV security cameras with real-time logs kept at the security desk. Professional security guards protect all entrance gates 24/7, and strict visitor checks are implemented. Additionally, the campus features fire safety equipment, first-aid response units, and coordinates with local medical centers.
+              Student safety is our highest operational priority. The entire campus is monitored by high-definition CCTV security cameras with real-time logs kept at the security desk. Professional security guards protect all entrance gates 24/7, and strict visitor checks are implemented. Special self-defense classes for girls are conducted regularly to build confidence and strength.
             </p>
           </div>
           <div className="bg-primary-cream/45 border border-primary-cream p-6 rounded-2xl space-y-3">
@@ -114,7 +122,7 @@ export default function FacilitiesPage() {
             {[
               "CCTV cameras covering all corridors",
               "Mandatory visitor log registry",
-              "Fire drill exercises conducted termly",
+              "Self-Defense classes conducted termly",
               "Fully stocked medical first-aid room"
             ].map((safety, idx) => (
               <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-dark-text/85">
@@ -123,7 +131,7 @@ export default function FacilitiesPage() {
               </div>
             ))}
           </div>
-        </div>
+        </AnimatedSection>
       </section>
     </div>
   );
